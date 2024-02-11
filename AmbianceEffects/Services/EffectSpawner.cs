@@ -65,7 +65,7 @@ namespace AmbianceEffects.Services
                 {
                     // Create timer
                     var state = new RepeatingEffect(zone, effect, effectParams);
-                    var timer = new Timer(OnTimerCallback, state, Random.Range(effect.MinRepeat * 1000, effect.MaxRepeat * 1000), Timeout.Infinite);
+                    var timer = new Timer(OnTimerCallback, state, (int)Random.Range(effect.MinRepeat * 1000, effect.MaxRepeat * 1000), Timeout.Infinite);
                     state.SetTimer(timer);
 
                     // Save effect
@@ -103,7 +103,7 @@ namespace AmbianceEffects.Services
         {
             RepeatingEffect repeatingEffect = (RepeatingEffect)state;
 
-            repeatingEffect.Timer?.Change(Random.Range(repeatingEffect.Effect.MinRepeat * 1000, repeatingEffect.Effect.MaxRepeat * 1000), Timeout.Infinite);
+            repeatingEffect.Timer?.Change((int)Random.Range(repeatingEffect.Effect.MinRepeat * 1000, repeatingEffect.Effect.MaxRepeat * 1000), Timeout.Infinite);
 
             _threadAdapter.RunOnMainThread(() =>
             {

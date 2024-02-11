@@ -19,7 +19,7 @@ namespace AmbianceEffects.Models
         public bool OwnerOnly { get; set; }
         public float VisibiltyRadius { get; set; } = 32f;
 
-        public int MinRepeat { get; set; } = -1;
-        public int MaxRepeat { get; set; } = -1;
+        public float MinRepeat { get; set; } = -1f;
+        public float MaxRepeat { get; set; } = -1f;
     }
 }

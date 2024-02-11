@@ -32,7 +32,7 @@ namespace AmbianceEffects.OpenMod.Commands
         {
             UnturnedUser user = (UnturnedUser)Context.Actor;
 
-            if (Context.Parameters.Length < 2)
+            if (Context.Parameters.Count < 2)
                 throw new CommandWrongUsageException(Context);
 
             string zoneName = Context.Parameters[0];

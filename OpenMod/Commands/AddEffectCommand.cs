@@ -34,7 +34,7 @@ namespace AmbianceEffects.OpenMod.Commands
         {
             UnturnedUser user = (UnturnedUser)Context.Actor;
 
-            if (Context.Parameters.Length < 4)
+            if (Context.Parameters.Count < 4)
                 throw new CommandWrongUsageException(Context);
 
             string zoneName = Context.Parameters[0];
@@ -48,9 +48,9 @@ namespace AmbianceEffects.OpenMod.Commands
 
             float radius = 256f;
             bool owneronly = false;
-            int minRepeat = -1;
-            int maxRepeat = -1;
-            for (int i = 4; i < Math.Min(Context.Parameters.Length, 9); i++)
+            float minRepeat = -1f;
+            float maxRepeat = -1f;
+            for (int i = 4; i < Math.Min(Context.Parameters.Count, 9); i++)
             {
                 string parameter = Context.Parameters[i];
 
@@ -60,8 +60,8 @@ namespace AmbianceEffects.OpenMod.Commands
                 }
                 else if (parameter == "-repeat")
                 {
-                    minRepeat = await Context.Parameters.GetAsync<int>(++i);
-                    maxRepeat = await Context.Parameters.GetAsync<int>(++i);
+                    minRepeat = await Context.Parameters.GetAsync<float>(++i);
+                    maxRepeat = await Context.Parameters.GetAsync<float>(++i);
 
                     if (minRepeat < 0 || maxRepeat <= 0)
                     {

@@ -35,7 +35,10 @@ namespace AmbianceEffects.Services
             _serviceAdapter = serviceAdapter;
             _effectSpawner = effectSpawner;
 
-            _ = TriggerInit();
+            if (Level.isLoaded)
+                _ = LateLoad();
+            else
+                Level.onPostLevelLoaded += OnLevelLoaded;
         }
 
         public void Dispose()
@@ -43,7 +46,8 @@ namespace AmbianceEffects.Services
             UnloadZones();
         }
 
-        public async Task TriggerInit()
+        private void OnLevelLoaded(int level) => _ = LateLoad();
+        private async Task LateLoad()
         {
             _highlightSpawner = await _serviceAdapter.GetServiceAsync<IHighlightSpawner>();
 

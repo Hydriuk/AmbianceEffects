@@ -57,4 +57,8 @@
 
   <Import Project="..\AmbianceEffects\AmbianceEffects.projitems" Label="Shared" />
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy bin\Release\net481\UHighlight.OpenMod.dll bin&#xD;&#xA;copy bin\Release\net481\Hydriuk.OpenModModules.dll bin&#xD;&#xA;copy bin\Release\net481\AmbianceEffects.OpenMod.dll bin" />
+  </Target>
+
 </Project>
