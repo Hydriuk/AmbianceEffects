@@ -60,9 +60,10 @@ namespace AmbianceEffects.Services
         {
             foreach (var zone in _zones.Keys)
             {
-                DeactivateZone(zone);
+                zone.Dispose();
             }
             _zones.Clear();
+            _effectSpawner.Dispose();
         }
 
         private void LoadZones()
@@ -88,16 +89,6 @@ namespace AmbianceEffects.Services
             return zone;
         }
 
-        private void DeactivateZone(HighlightedZone zone)
-        {
-            if (!_zones.TryGetValue(zone, out AmbianceZone ambianceZone))
-            {
-
-            }
-
-            zone.Dispose();
-        }
-
         private void OnPlayerEntered(object sender, Player player)
         {
             HighlightedZone zone = (HighlightedZone)sender;
@@ -106,8 +97,15 @@ namespace AmbianceEffects.Services
                 return;
 
             _effectSpawner.SpawnEffects(
-                player, 
+                player,
+                zone,
                 ambianceZone.Effects.Where(effect => effect.Event == ZoneProperty.EEvent.Enter)
+            );
+
+            _effectSpawner.StopRepeatingEffects(
+                player,
+                zone,
+                ambianceZone.Effects.Where(effect => effect.Event == ZoneProperty.EEvent.Exit)
             );
         }
 
@@ -119,8 +117,15 @@ namespace AmbianceEffects.Services
                 return;
 
             _effectSpawner.SpawnEffects(
-                player, 
+                player,
+                zone,
                 ambianceZone.Effects.Where(effect => effect.Event == ZoneProperty.EEvent.Exit)
+            );
+
+            _effectSpawner.StopRepeatingEffects(
+                player, 
+                zone,
+                ambianceZone.Effects.Where(effect => effect.Event == ZoneProperty.EEvent.Enter)
             );
         }
     }
