@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>82686fa2-4584-4f3c-8c39-3faab1ae88c2</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>AmbianceEffects</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)API\IAmbianceSpawner.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)API\IAmbianceStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)API\IEffectSpawner.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DAL\AmbianceStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AmbianceEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AmbianceZone.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\AmbianceSpawner.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\EffectSpawner.cs" />
+  </ItemGroup>
+</Project>
