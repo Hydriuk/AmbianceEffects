@@ -40,7 +40,7 @@ namespace AmbianceEffects.OpenMod.Commands
 
             _ambianceStore.Delete(zoneName);
 
-            _ambianceSpawner.ReloadZones();
+            await _ambianceSpawner.ReloadZones();
         }
     }
 }

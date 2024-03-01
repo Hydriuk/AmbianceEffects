@@ -7,6 +7,7 @@ using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using UHighlight.RocketMod;
+using UHighlight.RocketMod.Adapters;
 using UnityEngine;
 
 namespace AmbianceEffects.RocketMod.Commands
@@ -15,7 +16,9 @@ namespace AmbianceEffects.RocketMod.Commands
     {
         public static async void Execute(UnturnedPlayer uPlayer, string[] command)
         {
-            await Plugin.Instance.HighlightCommands.ExecuteVolumes(uPlayer.Player, Constants.GROUP_NAME);
+            HighlightCommands highlightCommands = new HighlightCommands();
+
+            await highlightCommands.ExecuteVolumes(uPlayer.Player, Constants.GROUP_NAME);
         }
     }
 }

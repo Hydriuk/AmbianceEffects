@@ -96,7 +96,7 @@ namespace AmbianceEffects.RocketMod.Commands
 
             Plugin.Instance.AmbianceStore.Update(zone);
 
-            Plugin.Instance.AmbianceSpawner.ReloadZones();
+            Task.Run(Plugin.Instance.AmbianceSpawner.ReloadZones);
         }
     }
 }

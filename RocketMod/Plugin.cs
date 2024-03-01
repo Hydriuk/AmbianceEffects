@@ -1,10 +1,7 @@
 ﻿using AmbianceEffects.DAL;
 using AmbianceEffects.Services;
 using Hydriuk.RocketModModules;
-using Hydriuk.RocketModModules.Adapters;
 using Rocket.Core.Plugins;
-using UHighlight.API;
-using UHighlight.RocketMod.Adapters;
 
 namespace AmbianceEffects.RocketMod
 {
@@ -14,14 +11,9 @@ namespace AmbianceEffects.RocketMod
 
         private ServiceRegistrator _serviceRegistrator;
 
-        [PluginService] private EnvironmentAdapter _environmentAdapter;
-        [PluginService] private ThreadAdapter _threadAdapter;
-        [PluginService] private ServiceAdapter _serviceAdapter;
-
         [PluginService] internal AmbianceStore AmbianceStore { get; private set; }
         [PluginService] internal EffectSpawner EffectSpawner { get; private set; }
         [PluginService] internal AmbianceSpawner AmbianceSpawner { get; private set; }
-        internal IHighlightCommands HighlightCommands { get; private set; }
 
         public Plugin()
         {
@@ -31,13 +23,14 @@ namespace AmbianceEffects.RocketMod
         protected override void Load()
         {
             _serviceRegistrator = new ServiceRegistrator(this);
-
-            HighlightCommands = new HighlightCommands();
         }
 
         protected override void Unload()
         {
             _serviceRegistrator.Dispose();
+            AmbianceStore.Dispose();
+            EffectSpawner.Dispose();
+            AmbianceSpawner.Dispose();
         }
     }
 }

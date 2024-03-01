@@ -1,4 +1,4 @@
-﻿using AmbianceEffects.API;
+using AmbianceEffects.API;
 using AmbianceEffects.Models;
 #if OPENMOD
 using Microsoft.Extensions.DependencyInjection;
@@ -24,21 +24,15 @@ namespace AmbianceEffects.Services
         private readonly Dictionary<HighlightedZone, AmbianceZone> _zones = new Dictionary<HighlightedZone, AmbianceZone>();
 
         private readonly IAmbianceStore _ambianceStore;
-        private readonly IServiceAdapter _serviceAdapter;
+        private readonly IHighlightSpawner _highlightSpawner;
         private readonly IEffectSpawner _effectSpawner;
 
-        private IHighlightSpawner? _highlightSpawner;
-
-        public AmbianceSpawner(IServiceAdapter serviceAdapter, IAmbianceStore ambianceStore, IEffectSpawner effectSpawner)
+        public AmbianceSpawner(IHighlightSpawner highlightSpawner, IAmbianceStore ambianceStore, IEffectSpawner effectSpawner)
         {
+            _highlightSpawner = highlightSpawner;
             _ambianceStore = ambianceStore;
-            _serviceAdapter = serviceAdapter;
             _effectSpawner = effectSpawner;
-
-            if (Level.isLoaded)
-                _ = LateLoad();
-            else
-                Level.onPostLevelLoaded += OnLevelLoaded;
+            Task.Run(ReloadZones);
         }
 
         public void Dispose()
@@ -46,18 +40,10 @@ namespace AmbianceEffects.Services
             UnloadZones();
         }
 
-        private void OnLevelLoaded(int level) => _ = LateLoad();
-        private async Task LateLoad()
-        {
-            _highlightSpawner = await _serviceAdapter.GetServiceAsync<IHighlightSpawner>();
-
-            ReloadZones();
-        }
-
-        public void ReloadZones()
+        public async Task ReloadZones()
         {
             UnloadZones();
-            LoadZones();
+            await LoadZones();
         }
 
         private void UnloadZones()
@@ -70,22 +56,21 @@ namespace AmbianceEffects.Services
             _effectSpawner.Dispose();
         }
 
-        private void LoadZones()
+        private async Task LoadZones()
         {
             foreach (var ambianceZone in _ambianceStore.GetAll())
             {
-                HighlightedZone zone = ActivateZone(ambianceZone);
-
+                HighlightedZone zone = await ActivateZone(ambianceZone);
                 _zones.Add(zone, ambianceZone);
             }
         }
 
-        private HighlightedZone ActivateZone(AmbianceZone ambianceZone)
+        private async Task<HighlightedZone> ActivateZone(AmbianceZone ambianceZone)
         {
             if (_highlightSpawner == null)
                 throw new Exception("HighlightSpawner did not load");
 
-            HighlightedZone zone = _highlightSpawner.BuildZone(Constants.GROUP_NAME, ambianceZone.Name);
+            HighlightedZone zone = await _highlightSpawner.BuildZone(Constants.GROUP_NAME, ambianceZone.Name);
 
             zone.PlayerEntered += OnPlayerEntered;
             zone.PlayerExited += OnPlayerExited;

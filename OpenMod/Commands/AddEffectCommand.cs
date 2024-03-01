@@ -93,7 +93,7 @@ namespace AmbianceEffects.OpenMod.Commands
 
             _zoneStore.Update(zone);
 
-            _ambianceSpawner.ReloadZones();
+            await _ambianceSpawner.ReloadZones();
         }
     }
 }

@@ -2,6 +2,7 @@
 using OpenMod.API.Ioc;
 #endif
 using System;
+using System.Threading.Tasks;
 
 namespace AmbianceEffects.API
 {
@@ -13,6 +14,6 @@ namespace AmbianceEffects.API
         /// <summary>
         /// Reload all ambiance zones
         /// </summary>
-        void ReloadZones();
+        Task ReloadZones();
     }
 }

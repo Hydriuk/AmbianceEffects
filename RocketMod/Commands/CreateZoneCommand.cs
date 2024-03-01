@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UHighlight.RocketMod;
+using UHighlight.RocketMod.Adapters;
 using UnityEngine;
 
 namespace AmbianceEffects.RocketMod.Commands
@@ -14,6 +15,8 @@ namespace AmbianceEffects.RocketMod.Commands
     {
         public static void Execute(UnturnedPlayer uPlayer, string[] command)
         {
+            HighlightCommands highlightCommands = new HighlightCommands();
+
             string shape;
             if (command.Length > 0)
                 shape = command[0];
@@ -24,13 +27,13 @@ namespace AmbianceEffects.RocketMod.Commands
             {
                 case "cube":
                 case "c":
-                    Plugin.Instance.HighlightCommands.ExecuteCreate(uPlayer.Player, "Cube", "Transparent", "Blue");
+                    highlightCommands.ExecuteCreate(uPlayer.Player, "Cube", "Transparent", "Blue");
                     break;
 
                 case "sphere":
                 case "s":
                 default:
-                    Plugin.Instance.HighlightCommands.ExecuteCreate(uPlayer.Player, "Sphere", "Transparent", "Blue");
+                    highlightCommands.ExecuteCreate(uPlayer.Player, "Sphere", "Transparent", "Blue");
                     break;
             }
         }

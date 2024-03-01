@@ -28,7 +28,7 @@ namespace AmbianceEffects.OpenMod.Commands
             _ambianceSpawner = ambianceSpawner;
         }
 
-        protected override UniTask OnExecuteAsync()
+        protected override async UniTask OnExecuteAsync()
         {
             UnturnedUser user = (UnturnedUser)Context.Actor;
 
@@ -46,9 +46,7 @@ namespace AmbianceEffects.OpenMod.Commands
 
             _zoneStore.Update(zone);
 
-            _ambianceSpawner.ReloadZones();
-
-            return UniTask.CompletedTask;
+            await _ambianceSpawner.ReloadZones();
         }
     }
 }
