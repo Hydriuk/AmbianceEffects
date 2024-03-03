@@ -4,7 +4,6 @@ using AmbianceEffects.Models;
 using Microsoft.Extensions.DependencyInjection;
 using OpenMod.API.Ioc;
 #endif
-using Hydriuk.UnturnedModules.Adapters;
 using SDG.Unturned;
 using System;
 using System.Collections.Generic;
@@ -67,8 +66,6 @@ namespace AmbianceEffects.Services
 
         private async Task<HighlightedZone> ActivateZone(AmbianceZone ambianceZone)
         {
-            if (_highlightSpawner == null)
-                throw new Exception("HighlightSpawner did not load");
 
             HighlightedZone zone = await _highlightSpawner.BuildZone(Constants.GROUP_NAME, ambianceZone.Name);
 
